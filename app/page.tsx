@@ -1,65 +1,145 @@
-import Image from "next/image";
+import Link from "next/link";
+import ToolCard from "@/components/ToolCard";
+import { imageTools } from "@/lib/tools/tools";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main>
+      {/* Hero */}
+      <section className="border-b bg-gray-50">
+        <div className="mx-auto max-w-6xl px-6 py-24 text-center md:py-32">
+          <div className="text-sm font-medium text-gray-500">
+            Free · Fast · Browser-based
+          </div>
+
+          <h1 className="mx-auto mt-5 max-w-4xl text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">
+            Simple image tools,
+            <br />
+            right in your browser.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+            Convert your images between JPG, PNG and WebP formats.
+            No uploads, no installation, and no complicated software.
+          </p>
+
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/jpg-to-png"
+              className="rounded-lg bg-black px-7 py-3 font-medium text-white transition hover:bg-gray-800"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
+              Start Converting
+            </Link>
+
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#tools"
+              className="rounded-lg border border-gray-300 bg-white px-7 py-3 font-medium text-gray-700 transition hover:bg-gray-50"
             >
-              Learning
-            </a>{" "}
-            center.
+              View All Tools
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Tools */}
+      <section
+        id="tools"
+        className="mx-auto max-w-6xl px-6 py-20"
+      >
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Image Tools
+          </h2>
+
+          <p className="mt-2 text-gray-500">
+            Free online tools for everyday image conversion.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {imageTools.map((tool) => (
+            <ToolCard
+              key={tool.slug}
+              title={tool.title}
+              description={tool.description}
+              href={`/${tool.slug}`}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Privacy */}
+      <section className="border-y bg-white">
+        <div className="mx-auto max-w-4xl px-6 py-20 text-center">
+          <div className="text-3xl">🔒</div>
+
+          <h2 className="mt-4 text-2xl font-bold text-gray-900">
+            Your images stay on your device.
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
+            Our image conversion tools process your files directly
+            in your browser. Your images do not need to be uploaded
+            to a server.
+          </p>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="grid gap-8 md:grid-cols-3">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">
+              100% Browser-based
+            </h3>
+
+            <p className="mt-2 leading-7 text-gray-600">
+              Image conversion happens directly on your device
+              using your browser.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">
+              Free to use
+            </h3>
+
+            <p className="mt-2 leading-7 text-gray-600">
+              Convert your images without creating an account
+              or installing additional software.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">
+              Fast processing
+            </h3>
+
+            <p className="mt-2 leading-7 text-gray-600">
+              Since your files are processed locally, there is
+              no need to wait for an upload to a remote server.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-gray-50 px-6 py-20 text-center">
+        <h2 className="text-3xl font-bold text-gray-900">
+          Start converting your images
+        </h2>
+
+        <p className="mt-3 text-gray-600">
+          Choose a tool and get started for free.
+        </p>
+
+        <Link
+          href="/jpg-to-png"
+          className="mt-8 inline-block rounded-lg bg-black px-7 py-3 font-medium text-white transition hover:bg-gray-800"
+        >
+          Try JPG to PNG
+        </Link>
+      </section>
+    </main>
   );
 }
