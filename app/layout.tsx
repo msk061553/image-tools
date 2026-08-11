@@ -53,6 +53,10 @@ export const metadata: Metadata = {
     description:
       "Convert JPG, PNG and WebP images directly in your browser.",
   },
+
+  verification: {
+    google: "Ge2ovRjke6MQiOBJVVTObcR7AFoPkPUlACfJf0A6ZcI",
+  },
 };
 
 export default function RootLayout({
