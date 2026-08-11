@@ -1,14 +1,8 @@
-import type { MetadataRoute } from "next";
 import { imageTools } from "@/lib/tools/tools";
 
-const BASE_URL = "https://YOUR-DOMAIN.com";
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  const toolPages = imageTools.map((tool) => ({
-    url: `${BASE_URL}/${tool.slug}`,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+export default function sitemap() {
+  const BASE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   return [
     {
@@ -17,6 +11,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
 
-    ...toolPages,
+    ...imageTools.map((tool) => ({
+      url: `${BASE_URL}/${tool.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    })),
   ];
 }
