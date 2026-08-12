@@ -42,7 +42,7 @@ export default function ContactPage() {
                   href="mailto:contact@imagetools.example"
                   className="font-medium text-gray-900 underline"
                 >
-                  contact@imagetools.example
+                  convertimagefreely@gmail.com
                 </a>
               </p>
             </section>
