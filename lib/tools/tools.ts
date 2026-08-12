@@ -19,9 +19,9 @@ export const imageTools: ImageTool[] = [
     outputFormat: "png",
     seo: {
       intro:
-        "Convert JPG images to PNG format with a free online converter. Your images are processed directly in your browser without being uploaded to a server.",
+        "Convert JPG images to PNG format with a free online converter. Images are processed directly in your browser without being uploaded to a server.",
       why:
-        "PNG uses lossless compression and supports transparent backgrounds. Converting JPG to PNG can be useful for graphics, screenshots, logos, and images that need further editing.",
+        "PNG uses lossless compression and supports transparent backgrounds. Converting JPG to PNG is useful for graphics, screenshots, logos, and images that need further editing.",
     },
   },
 
@@ -35,7 +35,7 @@ export const imageTools: ImageTool[] = [
       intro:
         "Convert PNG images to JPG format quickly with a free browser-based image converter. No software installation or account is required.",
       why:
-        "JPG files are widely supported and are often smaller than PNG files. Converting PNG to JPG can be useful when you need a smaller file for websites, email, or general sharing.",
+        "JPG files are widely supported and are often smaller than PNG files. Converting PNG to JPG is useful when you need a smaller image file for websites, email, or general sharing.",
     },
   },
 
@@ -49,7 +49,7 @@ export const imageTools: ImageTool[] = [
       intro:
         "Convert JPG images to WebP format online for free. The conversion happens directly in your browser, so your images stay on your device.",
       why:
-        "WebP is designed for efficient image delivery on the web. Converting JPG to WebP can help reduce image file sizes while maintaining good visual quality.",
+        "WebP is designed for efficient image delivery on the web. Converting JPG to WebP can reduce image file sizes while maintaining good visual quality.",
     },
   },
 
@@ -77,7 +77,7 @@ export const imageTools: ImageTool[] = [
       intro:
         "Convert WebP images to JPG format online for free. Process your images directly in your browser without uploading them to a server.",
       why:
-        "JPG has broad compatibility across image viewers, applications, websites, and devices. Converting WebP to JPG can be useful when a website or application does not support WebP.",
+        "JPG has broad compatibility across image viewers, applications, websites, and devices. Converting WebP to JPG is useful when a website or application does not support WebP.",
     },
   },
 
@@ -91,7 +91,7 @@ export const imageTools: ImageTool[] = [
       intro:
         "Convert WebP images to PNG format online for free. Process your images directly in your browser without uploading them to a server.",
       why:
-        "PNG supports lossless compression and transparent backgrounds. Converting WebP to PNG can be useful when you need a widely supported image format for editing, graphics, or other applications.",
+        "PNG supports lossless compression and transparent backgrounds. Converting WebP to PNG is useful when you need a widely supported image format for editing, graphics, or other applications.",
     },
   },
 
@@ -103,7 +103,7 @@ export const imageTools: ImageTool[] = [
     outputFormat: "jpeg",
     seo: {
       intro:
-        "Convert JPG images to JPEG format directly in your browser with our free online image converter.",
+        "Convert JPG images to JPEG format directly in your browser with a free online image converter.",
       why:
         "JPG and JPEG use the same image compression standard. Converting between the two extensions can be useful when a particular application requires a specific file extension.",
     },
@@ -119,7 +119,7 @@ export const imageTools: ImageTool[] = [
       intro:
         "Convert JPEG images to PNG format online for free. Your images are processed directly in your browser.",
       why:
-        "PNG uses lossless compression and supports transparency. It can be useful for graphics, screenshots, logos, and images that need additional editing.",
+        "PNG uses lossless compression and supports transparency. It is useful for graphics, screenshots, logos, and images that need additional editing.",
     },
   },
 
@@ -147,7 +147,7 @@ export const imageTools: ImageTool[] = [
       intro:
         "Convert PNG images to JPEG format quickly and easily with a free browser-based image converter.",
       why:
-        "JPEG is widely supported and can produce smaller files than PNG for many photographic images. It can be useful for websites, email, and general image sharing.",
+        "JPEG is widely supported and can produce smaller files than PNG for many photographic images. It is useful for websites, email, and general image sharing.",
     },
   },
 ];

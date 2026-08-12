@@ -85,6 +85,7 @@ export default function UploadBox({
 
       img.onerror = () => {
         URL.revokeObjectURL(url);
+
         reject(
           new Error("Unable to read image.")
         );
@@ -316,13 +317,43 @@ export default function UploadBox({
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`block cursor-pointer rounded-2xl border-2 border-dashed p-8 text-center transition sm:p-16 ${
+          className={`group block cursor-pointer rounded-2xl border-2 border-dashed p-8 text-center transition duration-200 sm:p-14 ${
             isDragging
-              ? "border-black bg-gray-100"
-              : "border-gray-300 bg-white hover:border-gray-500"
+              ? "border-blue-500 bg-blue-50"
+              : "border-blue-200 bg-blue-50/40 hover:border-blue-400 hover:bg-blue-50/70"
           }`}
         >
-          <div className="text-lg font-medium text-gray-900">
+          {/* Upload icon */}
+          <div
+            className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl transition ${
+              isDragging
+                ? "bg-blue-600 text-white"
+                : "bg-blue-100 text-blue-600 group-hover:bg-blue-200"
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              className="h-8 w-8"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 16V4m0 0L7 9m5-5 5 5"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"
+              />
+            </svg>
+          </div>
+
+          <div className="mt-6 text-xl font-semibold text-gray-900">
             {isDragging
               ? "Drop your image here"
               : `Drag & drop your ${inputFormat} image here`}
@@ -334,14 +365,22 @@ export default function UploadBox({
                 or
               </div>
 
-              <div className="mt-6 inline-block rounded-lg bg-black px-6 py-3 text-white">
+              <div className="mt-6 inline-flex rounded-lg bg-blue-600 px-7 py-3 font-medium text-white shadow-sm transition group-hover:bg-blue-700 group-hover:shadow-md">
                 Choose Image
               </div>
             </>
           )}
 
-          <div className="mt-6 text-sm text-gray-400">
-            {inputFormat} · Max 50MB · Max 10,000 × 10,000 px
+          <div className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-gray-400">
+            <span>{inputFormat}</span>
+            <span>•</span>
+            <span>Max 50MB</span>
+            <span>•</span>
+            <span>Max 10,000 × 10,000 px</span>
+          </div>
+
+          <div className="mt-3 text-xs text-gray-400">
+            Your image stays on your device.
           </div>
 
           <input
@@ -352,18 +391,20 @@ export default function UploadBox({
           />
         </label>
       ) : (
-        <div className="rounded-2xl bg-white p-5 shadow-sm sm:p-8">
+        <div className="rounded-2xl bg-white p-5 sm:p-8">
           {/* Original image */}
-          <div className="overflow-hidden rounded-xl bg-gray-100">
-            <img
-              src={previewUrl}
-              alt="Selected image preview"
-              className="mx-auto max-h-80 max-w-full object-contain"
-            />
+          <div className="overflow-hidden rounded-2xl border border-blue-100 bg-blue-50/50">
+            <div className="flex min-h-64 items-center justify-center p-4 sm:min-h-80">
+              <img
+                src={previewUrl}
+                alt="Selected image preview"
+                className="mx-auto max-h-80 max-w-full rounded-lg object-contain"
+              />
+            </div>
           </div>
 
           {/* Original file information */}
-          <div className="mt-6">
+          <div className="mt-6 rounded-xl border border-gray-100 bg-gray-50 p-4">
             <p className="break-all font-medium text-gray-900">
               {selectedFile.name}
             </p>
@@ -383,16 +424,16 @@ export default function UploadBox({
           {!convertedBlob &&
             (outputFormat === "jpeg" ||
               outputFormat === "webp") && (
-              <div className="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-5 text-left">
+              <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-5 text-left">
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="quality"
-                    className="font-medium text-gray-900"
+                    className="font-semibold text-gray-900"
                   >
                     Image Quality
                   </label>
 
-                  <span className="font-medium text-gray-900">
+                  <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
                     {quality}%
                   </span>
                 </div>
@@ -411,17 +452,12 @@ export default function UploadBox({
                       )
                     )
                   }
-                  className="mt-4 w-full"
+                  className="mt-5 w-full accent-blue-600"
                 />
 
                 <div className="mt-2 flex justify-between text-xs text-gray-400">
-                  <span>
-                    Smaller file
-                  </span>
-
-                  <span>
-                    Higher quality
-                  </span>
+                  <span>Smaller file</span>
+                  <span>Higher quality</span>
                 </div>
 
                 <p className="mt-3 text-xs leading-5 text-gray-500">
@@ -437,7 +473,7 @@ export default function UploadBox({
               type="button"
               onClick={handleConvert}
               disabled={isConverting}
-              className="mt-6 w-full rounded-lg bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-6 w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:from-blue-700 hover:to-purple-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isConverting
                 ? "Converting..."
@@ -449,16 +485,20 @@ export default function UploadBox({
           {convertedBlob &&
             convertedSize !== null &&
             compressionRate !== null && (
-              <div className="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-5">
-                <h3 className="font-semibold text-gray-900">
-                  Conversion Complete
-                </h3>
+              <div className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-600">
+                    ✓
+                  </div>
 
-                <div className="mt-4 space-y-2 text-sm text-gray-600">
+                  <h3 className="font-semibold text-gray-900">
+                    Conversion Complete
+                  </h3>
+                </div>
+
+                <div className="mt-5 space-y-3 rounded-xl bg-white p-4 text-sm text-gray-600">
                   <div className="flex justify-between gap-4">
-                    <span>
-                      Original
-                    </span>
+                    <span>Original</span>
 
                     <span className="font-medium text-gray-900">
                       {(
@@ -471,9 +511,7 @@ export default function UploadBox({
                   </div>
 
                   <div className="flex justify-between gap-4">
-                    <span>
-                      Converted
-                    </span>
+                    <span>Converted</span>
 
                     <span className="font-medium text-gray-900">
                       {(
@@ -485,9 +523,9 @@ export default function UploadBox({
                     </span>
                   </div>
 
-                  <div className="border-t pt-2">
+                  <div className="border-t pt-3">
                     {compressionRate > 0 ? (
-                      <p className="font-medium text-gray-900">
+                      <p className="font-semibold text-green-700">
                         File size reduced by{" "}
                         {compressionRate.toFixed(
                           1
@@ -495,7 +533,7 @@ export default function UploadBox({
                         %
                       </p>
                     ) : compressionRate < 0 ? (
-                      <p className="font-medium text-gray-900">
+                      <p className="font-semibold text-orange-600">
                         File size increased by{" "}
                         {Math.abs(
                           compressionRate
@@ -503,7 +541,7 @@ export default function UploadBox({
                         %
                       </p>
                     ) : (
-                      <p className="font-medium text-gray-900">
+                      <p className="font-semibold text-gray-700">
                         File size unchanged
                       </p>
                     )}
@@ -513,7 +551,7 @@ export default function UploadBox({
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="mt-5 w-full rounded-lg bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800"
+                  className="mt-5 w-full rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md"
                 >
                   Download {outputName}
                 </button>
@@ -525,7 +563,7 @@ export default function UploadBox({
             type="button"
             onClick={resetFile}
             disabled={isConverting}
-            className="mt-3 w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-3 w-full rounded-xl border border-gray-200 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Choose Another Image
           </button>
@@ -536,7 +574,7 @@ export default function UploadBox({
       {error && (
         <div
           role="alert"
-          className="mt-4 rounded-lg bg-red-50 p-4 text-sm text-red-600"
+          className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600"
         >
           {error}
         </div>

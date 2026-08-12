@@ -16,16 +16,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Free Online Image Tools",
-    template: "%s | Free Online Image Tools",
+    default: "ConvertImageFreely - Free Online Image Converter",
+    template: "%s | ConvertImageFreely",
   },
 
   description:
-    "Free online image conversion tools for JPG, PNG and WebP. Convert images directly in your browser without uploading your files.",
+    "Convert JPG, PNG and WebP images for free directly in your browser. No uploads, no account, and no software installation required.",
 
   keywords: [
+    "ConvertImageFreely",
     "image converter",
     "online image converter",
+    "free image converter",
     "jpg converter",
     "jpg to png",
     "png to jpg",
@@ -41,21 +43,27 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "Free Online Image Tools",
+    title:
+      "ConvertImageFreely - Free Online Image Converter",
+
     description:
-      "Convert JPG, PNG and WebP images directly in your browser.",
+      "Convert JPG, PNG and WebP images directly in your browser. Free, fast and private.",
+
     type: "website",
   },
 
   twitter: {
     card: "summary",
-    title: "Free Online Image Tools",
+    title:
+      "ConvertImageFreely - Free Online Image Converter",
+
     description:
-      "Convert JPG, PNG and WebP images directly in your browser.",
+      "Convert JPG, PNG and WebP images directly in your browser. Free, fast and private.",
   },
 
   verification: {
-    google: "Ge2ovRjke6MQiOBJVVTObcR7AFoPkPUlACfJf0A6ZcI",
+    google:
+      "Ge2ovRjke6MQiOBJVVTObcR7AFoPkPUlACfJf0A6ZcI",
   },
 };
 
