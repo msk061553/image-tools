@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -74,15 +75,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-XTDCMZJL2S"
+        strategy="afterInteractive"
+      />
+
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
       >
-        <Header />
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
 
-        {children}
+          gtag('config', 'G-XTDCMZJL2S');
+        `}
+      </Script>
 
-        <Footer />
-      </body>
+      <Header />
+
+      {children}
+
+      <Footer />
+    </body>
     </html>
   );
 }
