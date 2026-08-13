@@ -43,7 +43,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = getTranslations("en");
+  const t = getTranslations("ko");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -62,13 +62,10 @@ export async function generateMetadata({
     outputName
   );
 
-  const title =
-    `${toolTitle} Converter - Free Online Image Converter`;
-
-  const url = `${BASE_URL}/${tool.slug}`;
+  const url = `${BASE_URL}/ko/${tool.slug}`;
 
   return {
-    title,
+    title: `${toolTitle} - 무료 온라인 이미지 변환`,
     description,
 
     alternates: {
@@ -76,10 +73,11 @@ export async function generateMetadata({
     },
 
     openGraph: {
-      title,
+      title: `${toolTitle} - 무료 온라인 이미지 변환`,
       description,
       type: "website",
       url,
+      locale: "ko_KR",
     },
 
     robots: {
@@ -89,7 +87,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ToolSlugPage({
+export default async function KoreanToolPage({
   params,
 }: PageProps) {
   const { slug } = await params;
@@ -102,7 +100,7 @@ export default async function ToolSlugPage({
     notFound();
   }
 
-  const t = getTranslations("en");
+  const t = getTranslations("ko");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -131,7 +129,7 @@ export default async function ToolSlugPage({
     "@context": "https://schema.org",
     "@type": "WebApplication",
 
-    name: `${toolTitle} Converter`,
+    name: toolTitle,
 
     description: toolIntro,
 
@@ -141,9 +139,9 @@ export default async function ToolSlugPage({
 
     browserRequirements: "Requires JavaScript",
 
-    url: `${BASE_URL}/${tool.slug}`,
+    url: `${BASE_URL}/ko/${tool.slug}`,
 
-    inLanguage: "en",
+    inLanguage: "ko-KR",
 
     offers: {
       "@type": "Offer",
@@ -152,7 +150,7 @@ export default async function ToolSlugPage({
     },
 
     featureList: [
-      `Convert ${tool.inputFormat} to ${outputName}`,
+      `${tool.inputFormat} to ${outputName} conversion`,
       "Browser-based image conversion",
       "No server upload required",
       "Free to use",
@@ -166,46 +164,46 @@ export default async function ToolSlugPage({
     mainEntity: [
       {
         "@type": "Question",
-        name: `How do I convert ${tool.inputFormat} to ${outputName}?`,
+        name: `${tool.inputFormat}를 ${outputName}(으)로 어떻게 변환하나요?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Select your ${tool.inputFormat} image, convert it using the browser-based converter, and download the resulting ${outputName} image.`,
+          text: `${tool.inputFormat} 이미지를 선택한 후 변환 버튼을 클릭하고 변환된 ${outputName} 이미지를 다운로드하세요. 모든 과정은 브라우저에서 직접 처리됩니다.`,
         },
       },
 
       {
         "@type": "Question",
-        name: `Is this ${tool.inputFormat} to ${outputName} converter free?`,
+        name: `${tool.inputFormat} → ${outputName} 변환은 무료인가요?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes. The ${tool.inputFormat} to ${outputName} converter is free to use and does not require an account or software installation.`,
+          text: `네. ${tool.inputFormat} → ${outputName} 변환기는 무료로 사용할 수 있으며 계정이나 프로그램 설치가 필요하지 않습니다.`,
         },
       },
 
       {
         "@type": "Question",
-        name: "Are my images uploaded to a server?",
+        name: "이미지가 서버에 업로드되나요?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. Images are processed directly in the browser on the user's device and do not need to be uploaded to a server.",
+          text: "아니요. 이미지는 사용자의 브라우저에서 직접 처리되며 원본 이미지를 서버에 업로드할 필요가 없습니다.",
         },
       },
 
       {
         "@type": "Question",
-        name: "What is the maximum image size?",
+        name: "최대 이미지 크기는 얼마인가요?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Images up to 50MB are supported, with a maximum dimension of 10,000 by 10,000 pixels and a maximum total pixel count of 50 million.",
+          text: "최대 50MB의 이미지를 지원하며 최대 크기는 10,000 × 10,000 픽셀, 전체 픽셀 수는 5천만 픽셀입니다.",
         },
       },
 
       {
         "@type": "Question",
-        name: "Can I use this converter on a phone?",
+        name: "휴대폰에서도 사용할 수 있나요?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. The converter works in modern desktop and mobile browsers.",
+          text: "네. 최신 데스크톱 및 모바일 브라우저에서 사용할 수 있습니다.",
         },
       },
     ],
@@ -229,11 +227,11 @@ export default async function ToolSlugPage({
 
       <ToolPage
         slug={tool.slug}
-        title={`${toolTitle} Converter`}
+        title={toolTitle}
         description={toolDescription}
         inputFormat={tool.inputFormat}
         outputFormat={tool.outputFormat}
-        locale="en"
+        locale="ko"
       />
     </>
   );

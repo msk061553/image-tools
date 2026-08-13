@@ -1,20 +1,13 @@
 "use client";
 
-import {
-  ChangeEvent,
-  DragEvent,
-  useEffect,
-  useState,
-} from "react";
-
-import {
-  convertImage,
-  ImageFormat,
-} from "@/lib/image/converter";
+import { ChangeEvent, DragEvent, useEffect, useState } from "react";
+import { convertImage, ImageFormat } from "@/lib/image/converter";
+import { getTranslations, type Locale } from "@/lib/i18n";
 
 type UploadBoxProps = {
   inputFormat: "JPG" | "PNG" | "WebP";
   outputFormat: ImageFormat;
+  locale?: Locale;
 };
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
@@ -30,7 +23,10 @@ const MIME_TYPES = {
 export default function UploadBox({
   inputFormat,
   outputFormat,
+  locale = "en",
 }: UploadBoxProps) {
+  const t = getTranslations(locale);
+  
   const [selectedFile, setSelectedFile] =
     useState<File | null>(null);
 
@@ -106,15 +102,16 @@ export default function UploadBox({
 
     if (file.type !== expectedMime) {
       setError(
-        `Please select a ${inputFormat} image.`
+        t.errors.invalidFormat.replace(
+          "{format}",
+          inputFormat
+        )
       );
       return;
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      setError(
-        "The maximum file size is 50MB."
-      );
+      setError(t.errors.fileTooLarge);
       return;
     }
 
@@ -128,9 +125,7 @@ export default function UploadBox({
         dimensions.height >
           MAX_IMAGE_DIMENSION
       ) {
-        setError(
-          `Image dimensions cannot exceed ${MAX_IMAGE_DIMENSION.toLocaleString()} × ${MAX_IMAGE_DIMENSION.toLocaleString()} pixels.`
-        );
+        setError(t.errors.dimensionsTooLarge);
         return;
       }
 
@@ -354,29 +349,31 @@ export default function UploadBox({
           </div>
 
           <div className="mt-6 text-xl font-semibold text-gray-900">
-            {isDragging
-              ? "Drop your image here"
-              : `Drag & drop your ${inputFormat} image here`}
+          {isDragging
+            ? t.upload.dropImage
+            : t.upload.dragDrop.replace(
+                "{format}",
+                inputFormat
+              )}
           </div>
 
           {!isDragging && (
             <>
               <div className="mt-2 text-sm text-gray-500">
-                or
+                {t.upload.or}
               </div>
 
               <div className="mt-6 inline-flex rounded-lg bg-blue-600 px-7 py-3 font-medium text-white shadow-sm transition group-hover:bg-blue-700 group-hover:shadow-md">
-                Choose Image
+                {t.upload.chooseImage}
               </div>
             </>
           )}
 
           <div className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-gray-400">
-            <span>{inputFormat}</span>
-            <span>•</span>
-            <span>Max 50MB</span>
-            <span>•</span>
-            <span>Max 10,000 × 10,000 px</span>
+            {t.upload.maxFileInfo.replace(
+              "{format}",
+              inputFormat
+            )}
           </div>
 
           <div className="mt-3 text-xs text-gray-400">
@@ -410,7 +407,7 @@ export default function UploadBox({
             </p>
 
             <p className="mt-1 text-sm text-gray-500">
-              Original:{" "}
+              {t.upload.original}:{" "}
               {(
                 selectedFile.size /
                 1024 /
@@ -430,7 +427,7 @@ export default function UploadBox({
                     htmlFor="quality"
                     className="font-semibold text-gray-900"
                   >
-                    Image Quality
+                    {t.upload.imageQuality}
                   </label>
 
                   <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
@@ -456,13 +453,12 @@ export default function UploadBox({
                 />
 
                 <div className="mt-2 flex justify-between text-xs text-gray-400">
-                  <span>Smaller file</span>
-                  <span>Higher quality</span>
+                  <span>{t.upload.smallerFile}</span>
+                  <span>{t.upload.higherQuality}</span>
                 </div>
 
                 <p className="mt-3 text-xs leading-5 text-gray-500">
-                  Higher quality produces a larger file.
-                  Lower quality can reduce the file size.
+                  {t.upload.qualityDescription}
                 </p>
               </div>
             )}
@@ -476,8 +472,11 @@ export default function UploadBox({
               className="mt-6 w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:from-blue-700 hover:to-purple-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isConverting
-                ? "Converting..."
-                : `Convert to ${outputName}`}
+                ? t.upload.converting
+                : t.upload.convertTo.replace(
+                    "{format}",
+                    outputName
+                  )}
             </button>
           )}
 
@@ -492,7 +491,7 @@ export default function UploadBox({
                   </div>
 
                   <h3 className="font-semibold text-gray-900">
-                    Conversion Complete
+                    {t.upload.conversionComplete}
                   </h3>
                 </div>
 
@@ -511,7 +510,7 @@ export default function UploadBox({
                   </div>
 
                   <div className="flex justify-between gap-4">
-                    <span>Converted</span>
+                    <span>{t.upload.converted}</span>
 
                     <span className="font-medium text-gray-900">
                       {(
@@ -526,23 +525,21 @@ export default function UploadBox({
                   <div className="border-t pt-3">
                     {compressionRate > 0 ? (
                       <p className="font-semibold text-green-700">
-                        File size reduced by{" "}
-                        {compressionRate.toFixed(
-                          1
+                        {t.upload.fileSizeReduced.replace(
+                          "{percent}",
+                          compressionRate.toFixed(1)
                         )}
-                        %
                       </p>
                     ) : compressionRate < 0 ? (
                       <p className="font-semibold text-orange-600">
-                        File size increased by{" "}
-                        {Math.abs(
-                          compressionRate
-                        ).toFixed(1)}
-                        %
+                        {t.upload.fileSizeIncreased.replace(
+                          "{percent}",
+                          Math.abs(compressionRate).toFixed(1)
+                        )}
                       </p>
                     ) : (
                       <p className="font-semibold text-gray-700">
-                        File size unchanged
+                        {t.upload.fileSizeUnchanged}
                       </p>
                     )}
                   </div>
@@ -553,7 +550,10 @@ export default function UploadBox({
                   onClick={handleDownload}
                   className="mt-5 w-full rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md"
                 >
-                  Download {outputName}
+                  {t.upload.download.replace(
+                    "{format}",
+                    outputName
+                  )}
                 </button>
               </div>
             )}
@@ -565,7 +565,7 @@ export default function UploadBox({
             disabled={isConverting}
             className="mt-3 w-full rounded-xl border border-gray-200 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Choose Another Image
+            {t.upload.chooseAnother}
           </button>
         </div>
       )}

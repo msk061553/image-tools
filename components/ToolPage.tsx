@@ -1,34 +1,56 @@
 import Link from "next/link";
 import UploadBox from "@/components/UploadBox";
 import { imageTools } from "@/lib/tools/tools";
+import { getTranslations, type Locale } from "@/lib/i18n";
 
 type ToolPageProps = {
+  slug: string;
   title: string;
   description: string;
   inputFormat: "JPG" | "PNG" | "WebP";
   outputFormat: "png" | "jpeg" | "webp";
-  seo: {
-    intro: string;
-    why: string;
-  };
+  locale?: Locale;
 };
 
+function replaceVariables(
+  text: string,
+  input: string,
+  output: string
+) {
+  return text
+    .replaceAll("{input}", input)
+    .replaceAll("{output}", output);
+}
+
 export default function ToolPage({
+  slug,
   title,
   description,
   inputFormat,
   outputFormat,
-  seo,
+  locale = "en",
 }: ToolPageProps) {
+  const t = getTranslations(locale);
+
   const outputName =
     outputFormat === "jpeg"
       ? "JPG"
       : outputFormat.toUpperCase();
 
-  const currentToolTitle = title.replace(" Converter", "");
+  const toolIntro = replaceVariables(
+    t.converter.toolIntro,
+    inputFormat,
+    outputName
+  );
+
+  const toolWhy = replaceVariables(
+    t.converter.toolWhy,
+    inputFormat,
+    outputName
+  );
 
   const relatedTools = imageTools
-    .filter((tool) => tool.title !== currentToolTitle)
+    .filter((tool) => tool.slug !== slug)
     .filter(
       (tool) =>
         tool.inputFormat === inputFormat ||
@@ -38,15 +60,15 @@ export default function ToolPage({
 
   return (
     <main>
-      {/* Hero + Converter */}
+      {/* Hero */}
       <section className="relative overflow-hidden border-b border-blue-100 bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="mx-auto max-w-4xl px-6 pb-20 pt-16 md:pb-24 md:pt-20">
+        <div className="mx-auto max-w-5xl px-6 pb-16 pt-16 md:pb-20 md:pt-20">
           <div className="text-center">
-            <div className="mb-5 inline-flex items-center rounded-full border border-blue-200 bg-white/80 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm">
-              Free · Browser-based · No upload
+            <div className="inline-flex items-center rounded-full border border-blue-200 bg-white/80 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm">
+              {t.converter.freeBrowserBased}
             </div>
 
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+            <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
               {title}
             </h1>
 
@@ -56,268 +78,380 @@ export default function ToolPage({
           </div>
 
           {/* Converter */}
-          <div className="mt-10 rounded-3xl border border-blue-100 bg-white/80 p-2 shadow-xl shadow-blue-100/40 backdrop-blur-sm sm:p-3">
+          <div className="mt-10 rounded-3xl border border-blue-100 bg-white p-4 shadow-lg shadow-blue-100/50 md:p-6">
             <UploadBox
               inputFormat={inputFormat}
               outputFormat={outputFormat}
+              locale={locale}
             />
           </div>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-500">
-            <span>✓ Free to use</span>
-            <span>✓ No account required</span>
-            <span>✓ No server upload</span>
-          </div>
-
-          <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-6 text-gray-500">
-            Your images are processed directly in your browser.
-            Files are not uploaded to our server.
+          <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-6 text-gray-500">
+            {t.converter.yourImagesProcessed}
           </p>
         </div>
       </section>
 
-      {/* How it works */}
+      {/* How to convert */}
       <section className="border-b border-blue-100 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="text-center">
+        <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
+          <div className="mb-10 text-center">
             <div className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-              How it works
+              {t.converter.howToConvert
+                .replace("{input}", inputFormat)
+                .replace("{output}", outputName)}
             </div>
 
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-              Convert {inputFormat} to {outputName} in 3 steps
+              {locale === "ko"
+                ? "간단한 3단계로 변환하세요"
+                : "Convert your image in three simple steps"}
             </h2>
-
-            <p className="mx-auto mt-3 max-w-2xl text-gray-500">
-              No software installation or complicated settings required.
-            </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-7">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Step 1 */}
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 font-semibold text-blue-600">
                 1
               </div>
 
-              <h3 className="mt-5 text-lg font-semibold text-gray-900">
-                Select your image
+              <div className="mt-5 text-sm font-medium text-blue-600">
+                {t.converter.step1}
+              </div>
+
+              <h3 className="mt-2 text-lg font-semibold text-gray-900">
+                {t.converter.selectImage}
               </h3>
 
-              <p className="mt-2 text-sm leading-6 text-gray-600">
-                Select a {inputFormat} image from your device or
-                drag and drop it into the converter.
+              <p className="mt-2 leading-7 text-gray-600">
+                {t.converter.selectImageDescription.replace(
+                  "{format}",
+                  inputFormat
+                )}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-purple-100 bg-purple-50/50 p-7">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple-600 font-bold text-white">
+            {/* Step 2 */}
+            <div className="rounded-2xl border border-purple-100 bg-purple-50/40 p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple-100 font-semibold text-purple-600">
                 2
               </div>
 
-              <h3 className="mt-5 text-lg font-semibold text-gray-900">
-                Convert the image
+              <div className="mt-5 text-sm font-medium text-purple-600">
+                {t.converter.step2}
+              </div>
+
+              <h3 className="mt-2 text-lg font-semibold text-gray-900">
+                {t.converter.convertImage}
               </h3>
 
-              <p className="mt-2 text-sm leading-6 text-gray-600">
-                Click the convert button. Your browser processes
-                the image directly on your device.
+              <p className="mt-2 leading-7 text-gray-600">
+                {t.converter.convertImageDescription}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-7">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+            {/* Step 3 */}
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 font-semibold text-blue-600">
                 3
               </div>
 
-              <h3 className="mt-5 text-lg font-semibold text-gray-900">
-                Download the result
+              <div className="mt-5 text-sm font-medium text-blue-600">
+                {t.converter.step3}
+              </div>
+
+              <h3 className="mt-2 text-lg font-semibold text-gray-900">
+                {t.converter.downloadResult}
               </h3>
 
-              <p className="mt-2 text-sm leading-6 text-gray-600">
-                Download your converted {outputName} image
-                immediately after conversion.
+              <p className="mt-2 leading-7 text-gray-600">
+                {t.converter.downloadResultDescription.replace(
+                  "{format}",
+                  outputName
+                )}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Privacy */}
+      <section className="border-y border-blue-100 bg-blue-50/50">
+        <div className="mx-auto max-w-4xl px-6 py-16 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 text-2xl">
+            🔒
+          </div>
+
+          <h2 className="mt-5 text-2xl font-bold text-gray-900">
+            {t.converter.areImagesUploaded}
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
+            {t.converter.notUploadedDescription}
+          </p>
+
+          <div className="mt-6 text-sm font-medium text-blue-700">
+            {locale === "ko"
+              ? "비공개 · 안전한 처리 · 브라우저 기반"
+              : "Private · Secure · Browser-based"}
           </div>
         </div>
       </section>
 
       {/* SEO Content */}
-      <section className="border-b border-blue-100 bg-blue-50/40">
-        <div className="mx-auto max-w-4xl px-6 py-20">
-          <div className="rounded-3xl border border-blue-100 bg-white p-7 shadow-sm sm:p-10">
-            <div className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-              About this converter
+      <section className="bg-white">
+        <div className="mx-auto max-w-4xl px-6 py-20 md:py-24">
+          <div className="mb-10 text-center">
+            <div className="text-sm font-semibold uppercase tracking-wider text-purple-600">
+              {title}
             </div>
 
-            <h2 className="mt-3 text-2xl font-bold text-gray-900">
-              {title}
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
+              {locale === "ko"
+                ? "이미지 변환에 대해 알아보기"
+                : "Everything you need to know"}
             </h2>
+          </div>
 
-            <p className="mt-4 leading-7 text-gray-600">
-              {seo.intro}
-            </p>
+          <div className="space-y-10">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {title}
+              </h2>
 
-            <h2 className="mt-10 text-2xl font-bold text-gray-900">
-              Why convert {inputFormat} to {outputName}?
-            </h2>
+              <p className="mt-4 leading-8 text-gray-600">
+                {toolIntro}
+              </p>
+            </div>
 
-            <p className="mt-4 leading-7 text-gray-600">
-              {seo.why}
-            </p>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {t.converter.whyConvert
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
+              </h2>
 
-            <h2 className="mt-10 text-2xl font-bold text-gray-900">
-              Is this {inputFormat} to {outputName} converter free?
-            </h2>
+              <p className="mt-4 leading-8 text-gray-600">
+                {toolWhy}
+              </p>
+            </div>
 
-            <p className="mt-4 leading-7 text-gray-600">
-              Yes. This online {inputFormat} to {outputName} converter
-              is free to use. You do not need to install software,
-              create an account, or upload your images to a server.
-            </p>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {t.converter.isFree
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
+              </h2>
 
-            <h2 className="mt-10 text-2xl font-bold text-gray-900">
-              Are my images uploaded?
-            </h2>
+              <p className="mt-4 leading-8 text-gray-600">
+                {t.converter.freeDescription
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
+              </p>
+            </div>
 
-            <p className="mt-4 leading-7 text-gray-600">
-              No. Your images are processed directly in your browser.
-              The conversion happens on your device, so your original
-              image does not need to be sent to our server.
-            </p>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {t.converter.fileSizeLimit}
+              </h2>
 
-            <h2 className="mt-10 text-2xl font-bold text-gray-900">
-              Is there a file size limit?
-            </h2>
-
-            <p className="mt-4 leading-7 text-gray-600">
-              You can convert images up to 50MB. Images are also
-              checked for dimensions and total pixel count to help
-              prevent excessive browser memory usage during conversion.
-            </p>
+              <p className="mt-4 leading-8 text-gray-600">
+                {t.converter.fileSizeDescription}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Related Tools */}
-      <section className="border-b border-blue-100 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="text-center">
-            <div className="text-sm font-semibold uppercase tracking-wider text-purple-600">
-              More tools
+      <section className="border-t border-blue-100 bg-blue-50/30">
+        <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
+          <div className="mb-10 text-center">
+            <div className="text-sm font-semibold uppercase tracking-wider text-blue-600">
+              {t.converter.relatedTools}
             </div>
 
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-              Related Image Tools
+              {t.converter.relatedDescription}
             </h2>
-
-            <p className="mt-3 text-gray-500">
-              More free image conversion tools from ConvertImageFreely.
-            </p>
           </div>
 
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {relatedTools.map((tool) => (
-              <Link
-                key={tool.slug}
-                href={`/${tool.slug}`}
-                className="group rounded-2xl border border-blue-100 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-lg font-semibold text-gray-900 transition group-hover:text-blue-600">
-                    {tool.title}
-                  </h3>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedTools.map((tool, index) => {
+              const relatedOutput =
+                tool.outputFormat === "jpeg"
+                  ? "JPG"
+                  : tool.outputFormat.toUpperCase();
 
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
+              const relatedTitle =
+                locale === "ko"
+                  ? replaceVariables(
+                      t.converter.toolTitle,
+                      tool.inputFormat,
+                      relatedOutput
+                    )
+                  : tool.title;
+
+              const relatedDescription =
+                locale === "ko"
+                  ? replaceVariables(
+                      t.converter.toolDescription,
+                      tool.inputFormat,
+                      relatedOutput
+                    )
+                  : tool.description;
+
+              return (
+                <Link
+                  key={tool.slug}
+                  href={
+                    locale === "en"
+                      ? `/${tool.slug}`
+                      : `/${locale}/${tool.slug}`
+                  }
+                  className={`group rounded-2xl border bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md ${
+                    index === 1
+                      ? "border-purple-100 hover:border-purple-300"
+                      : "border-blue-100 hover:border-blue-300"
+                  }`}
+                >
+                  <div
+                    className={`flex h-11 w-11 items-center justify-center rounded-xl ${
+                      index === 1
+                        ? "bg-purple-100 text-purple-600"
+                        : "bg-blue-100 text-blue-600"
+                    }`}
+                  >
                     →
                   </div>
-                </div>
 
-                <p className="mt-3 text-sm leading-6 text-gray-500">
-                  {tool.description}
-                </p>
+                  <h3 className="mt-5 text-lg font-semibold text-gray-900">
+                    {relatedTitle}
+                  </h3>
 
-                <div className="mt-5 text-sm font-semibold text-blue-600 transition group-hover:text-purple-600">
-                  Convert →
-                </div>
-              </Link>
-            ))}
+                  <p className="mt-2 text-sm leading-6 text-gray-600">
+                    {relatedDescription}
+                  </p>
+
+                  <div
+                    className={`mt-5 text-sm font-semibold ${
+                      index === 1
+                        ? "text-purple-600"
+                        : "text-blue-600"
+                    }`}
+                  >
+                    {t.converter.convert} →
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="bg-gray-50">
-        <div className="mx-auto max-w-4xl px-6 py-20">
-          <div className="text-center">
-            <div className="text-sm font-semibold uppercase tracking-wider text-blue-600">
+      <section className="bg-white">
+        <div className="mx-auto max-w-4xl px-6 py-20 md:py-24">
+          <div className="mb-10 text-center">
+            <div className="text-sm font-semibold uppercase tracking-wider text-purple-600">
               FAQ
             </div>
 
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-              Frequently Asked Questions
+              {t.converter.faq}
             </h2>
           </div>
 
-          <div className="mt-10 space-y-4">
-            <div className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/30 p-6">
               <h3 className="text-lg font-semibold text-gray-900">
-                How do I convert {inputFormat} to {outputName}?
+                {t.converter.howDoIConvert
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
               </h3>
 
-              <p className="mt-2 leading-7 text-gray-600">
-                Select your {inputFormat} image, click the convert button,
-                and then download the converted {outputName} image.
-                The entire process takes place directly in your browser.
+              <p className="mt-3 leading-7 text-gray-600">
+                {t.converter.howDoIConvertDescription
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-purple-100 bg-purple-50/30 p-6">
               <h3 className="text-lg font-semibold text-gray-900">
-                Is this {inputFormat} to {outputName} converter free?
+                {t.converter.isFree
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
               </h3>
 
-              <p className="mt-2 leading-7 text-gray-600">
-                Yes. This {inputFormat} to {outputName} converter is free
-                to use. No account or software installation is required.
+              <p className="mt-3 leading-7 text-gray-600">
+                {t.converter.freeDescription
+                  .replace("{input}", inputFormat)
+                  .replace("{output}", outputName)}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/30 p-6">
               <h3 className="text-lg font-semibold text-gray-900">
-                Are my images uploaded to a server?
+                {t.converter.areImagesUploaded}
               </h3>
 
-              <p className="mt-2 leading-7 text-gray-600">
-                No. Your images are processed directly on your device
-                using your browser. The original image does not need to
-                be uploaded to a server.
+              <p className="mt-3 leading-7 text-gray-600">
+                {t.converter.notUploadedDescription}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-purple-100 bg-purple-50/30 p-6">
               <h3 className="text-lg font-semibold text-gray-900">
-                What is the maximum image size?
+                {t.converter.maximumImageSize}
               </h3>
 
-              <p className="mt-2 leading-7 text-gray-600">
-                Images up to 50MB are supported. Images are also limited
-                to 10,000 × 10,000 pixels and 50 million total pixels
-                to help prevent excessive browser memory usage.
+              <p className="mt-3 leading-7 text-gray-600">
+                {t.converter.maximumImageSizeDescription}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/30 p-6">
               <h3 className="text-lg font-semibold text-gray-900">
-                Can I use this converter on a phone?
+                {t.converter.phoneSupport}
               </h3>
 
-              <p className="mt-2 leading-7 text-gray-600">
-                Yes. The converter works in modern desktop and mobile
-                browsers without requiring an app or additional software.
+              <p className="mt-3 leading-7 text-gray-600">
+                {t.converter.phoneSupportDescription}
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-20 text-center">
+        <div className="relative mx-auto max-w-3xl">
+          <h2 className="text-3xl font-bold text-white">
+            {locale === "ko"
+              ? "이미지 변환을 시작하세요"
+              : "Start converting your image"}
+          </h2>
+
+          <p className="mt-3 text-blue-100">
+            {locale === "ko"
+              ? "원하는 이미지를 선택하고 무료로 변환하세요."
+              : "Choose your image and convert it for free."}
+          </p>
+
+          <Link
+            href={
+              locale === "ko"
+                ? "/ko/jpg-to-png"
+                : "/jpg-to-png"
+            }
+            className="mt-8 inline-block rounded-lg bg-white px-7 py-3 font-medium text-blue-700 shadow-sm transition hover:bg-blue-50 hover:shadow-md"
+          >
+            {locale === "ko"
+              ? "JPG를 PNG로 변환"
+              : "Try JPG to PNG"}
+          </Link>
         </div>
       </section>
     </main>

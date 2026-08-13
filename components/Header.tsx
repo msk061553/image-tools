@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { imageTools } from "@/lib/tools/tools";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header() {
   return (
@@ -71,6 +72,9 @@ export default function Header() {
             >
               About
             </Link>
+
+            <LanguageSwitcher />
+            
           </nav>
         </div>
       </div>
