@@ -1,20 +1,38 @@
+import type { MetadataRoute } from "next";
 import { imageTools } from "@/lib/tools/tools";
 
-export default function sitemap() {
+export default function sitemap(): MetadataRoute.Sitemap {
   const BASE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://convertimagefreely.com";
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
       changeFrequency: "weekly",
       priority: 1,
     },
-
-    ...imageTools.map((tool) => ({
-      url: `${BASE_URL}/${tool.slug}`,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    })),
+    {
+      url: `${BASE_URL}/ko`,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
   ];
+
+  const toolPages: MetadataRoute.Sitemap = imageTools.flatMap(
+    (tool) => [
+      {
+        url: `${BASE_URL}/${tool.slug}`,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      },
+      {
+        url: `${BASE_URL}/ko/${tool.slug}`,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      },
+    ]
+  );
+
+  return [...staticPages, ...toolPages];
 }
