@@ -20,6 +20,7 @@ export const metadata: Metadata = {
       ja: `${BASE_URL}/ja`,
       zh: `${BASE_URL}/zh`,
       es: `${BASE_URL}/es`,
+      de: `${BASE_URL}/de`,
       "x-default": BASE_URL,
     },
   },

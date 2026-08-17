@@ -76,6 +76,7 @@ export async function generateMetadata({
         ja: url,
         zh: `${BASE_URL}/zh/${tool.slug}`,
         es: `${BASE_URL}/es/${tool.slug}`,
+        de: `${BASE_URL}/de/${tool.slug}`,
         "x-default": `${BASE_URL}/${tool.slug}`,
       },
     },

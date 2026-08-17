@@ -3,9 +3,10 @@ import ko from "@/locales/ko.json";
 import ja from "@/locales/ja.json";
 import zh from "@/locales/zh.json";
 import es from "@/locales/es.json";
+import de from "@/locales/de.json";
 
 
-export const locales = ["en", "ko", "ja", "zh", "es"] as const;
+export const locales = ["en", "ko", "ja", "zh", "es", "de"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -17,6 +18,7 @@ export const translations = {
   ja,
   zh,
   es,
+  de,
 };
 
 export function isLocale(value: string): value is Locale {

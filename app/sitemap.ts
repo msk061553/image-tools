@@ -5,7 +5,7 @@ const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   "https://convertimagefreely.com";
 
-const locales = ["en", "ko", "ja", "zh"] as const;
+const locales = ["en", "ko", "ja", "zh", "es", "de"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
