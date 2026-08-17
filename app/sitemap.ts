@@ -1,22 +1,26 @@
 import type { MetadataRoute } from "next";
 import { imageTools } from "@/lib/tools/tools";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://convertimagefreely.com";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://convertimagefreely.com";
 
+const locales = ["en", "ko", "ja", "zh"] as const;
+
+export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
       changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: `${BASE_URL}/ko`,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
+    ...locales
+      .filter((locale) => locale !== "en")
+      .map((locale) => ({
+        url: `${BASE_URL}/${locale}`,
+        changeFrequency: "weekly" as const,
+        priority: 0.9,
+      })),
   ];
 
   const toolPages: MetadataRoute.Sitemap = imageTools.flatMap(
@@ -26,11 +30,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly" as const,
         priority: 0.8,
       },
-      {
-        url: `${BASE_URL}/ko/${tool.slug}`,
-        changeFrequency: "monthly" as const,
-        priority: 0.8,
-      },
+      ...locales
+        .filter((locale) => locale !== "en")
+        .map((locale) => ({
+          url: `${BASE_URL}/${locale}/${tool.slug}`,
+          changeFrequency: "monthly" as const,
+          priority: 0.8,
+        })),
     ]
   );
 

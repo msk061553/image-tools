@@ -12,9 +12,17 @@ const languages = [
     code: "ko",
     label: "한국어",
   },
+  {
+    code: "ja",
+    label: "日本語",
+  },
+  {
+    code: "zh",
+    label: "中文",
+  },
 ];
 
-const localizedLocales = ["ko"];
+const localizedLocales = ["ko", "ja", "zh"];
 
 export default function LanguageSwitcher() {
   const router = useRouter();

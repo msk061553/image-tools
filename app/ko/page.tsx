@@ -2,6 +2,7 @@ import Link from "next/link";
 import ToolCard from "@/components/ToolCard";
 import { imageTools } from "@/lib/tools/tools";
 import { getTranslations } from "@/lib/i18n";
+import type { Metadata } from "next";
 
 function replaceVariables(
   text: string,
@@ -12,6 +13,39 @@ function replaceVariables(
     .replaceAll("{input}", input)
     .replaceAll("{output}", output);
 }
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://convertimagefreely.com";
+
+export const metadata: Metadata = {
+  title: "무료 온라인 이미지 도구",
+  description:
+    "JPG, PNG, WebP 이미지를 브라우저에서 직접 변환할 수 있는 무료 온라인 이미지 도구입니다. 이미지 파일을 서버에 업로드할 필요가 없습니다.",
+
+  alternates: {
+    canonical: `${BASE_URL}/ko`,
+    languages: {
+      en: BASE_URL,
+      ko: `${BASE_URL}/ko`,
+      "x-default": BASE_URL,
+    },
+  },
+
+  openGraph: {
+    title: "무료 온라인 이미지 도구",
+    description:
+      "JPG, PNG, WebP 이미지를 브라우저에서 직접 변환하세요.",
+    type: "website",
+    url: `${BASE_URL}/ko`,
+    locale: "ko_KR",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function KoreanHome() {
   const t = getTranslations("ko");

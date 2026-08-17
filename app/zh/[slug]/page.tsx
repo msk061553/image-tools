@@ -43,7 +43,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = getTranslations("en");
+  const t = getTranslations("zh");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -62,29 +62,29 @@ export async function generateMetadata({
     outputName
   );
 
-  const title =
-    `${toolTitle} Converter - Free Online Image Converter`;
-
-  const url = `${BASE_URL}/${tool.slug}`;
+  const url = `${BASE_URL}/zh/${tool.slug}`;
 
   return {
-    title,
+    title: `${toolTitle} - 免费在线图片转换`,
     description,
 
     alternates: {
       canonical: url,
       languages: {
-        en: url,
+        en: `${BASE_URL}/${tool.slug}`,
         ko: `${BASE_URL}/ko/${tool.slug}`,
-        "x-default": url,
+        ja: `${BASE_URL}/ja/${tool.slug}`,
+        zh: url,
+        "x-default": `${BASE_URL}/${tool.slug}`,
       },
     },
 
     openGraph: {
-      title,
+      title: `${toolTitle} - 免费在线图片转换`,
       description,
       type: "website",
       url,
+      locale: "zh_CN",
     },
 
     robots: {
@@ -94,7 +94,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ToolSlugPage({
+export default async function ChineseToolPage({
   params,
 }: PageProps) {
   const { slug } = await params;
@@ -107,7 +107,7 @@ export default async function ToolSlugPage({
     notFound();
   }
 
-  const t = getTranslations("en");
+  const t = getTranslations("zh");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -136,7 +136,7 @@ export default async function ToolSlugPage({
     "@context": "https://schema.org",
     "@type": "WebApplication",
 
-    name: `${toolTitle} Converter`,
+    name: toolTitle,
 
     description: toolIntro,
 
@@ -146,9 +146,9 @@ export default async function ToolSlugPage({
 
     browserRequirements: "Requires JavaScript",
 
-    url: `${BASE_URL}/${tool.slug}`,
+    url: `${BASE_URL}/zh/${tool.slug}`,
 
-    inLanguage: "en",
+    inLanguage: "zh-CN",
 
     offers: {
       "@type": "Offer",
@@ -157,7 +157,7 @@ export default async function ToolSlugPage({
     },
 
     featureList: [
-      `Convert ${tool.inputFormat} to ${outputName}`,
+      `${tool.inputFormat} to ${outputName} conversion`,
       "Browser-based image conversion",
       "No server upload required",
       "Free to use",
@@ -171,46 +171,46 @@ export default async function ToolSlugPage({
     mainEntity: [
       {
         "@type": "Question",
-        name: `How do I convert ${tool.inputFormat} to ${outputName}?`,
+        name: `如何将 ${tool.inputFormat} 转换为 ${outputName}？`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Select your ${tool.inputFormat} image, convert it using the browser-based converter, and download the resulting ${outputName} image.`,
+          text: `选择 ${tool.inputFormat} 图片，点击转换按钮，然后下载转换后的 ${outputName} 图片。整个过程都直接在浏览器中完成。`,
         },
       },
 
       {
         "@type": "Question",
-        name: `Is this ${tool.inputFormat} to ${outputName} converter free?`,
+        name: `${tool.inputFormat} 转 ${outputName} 是免费的吗？`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes. The ${tool.inputFormat} to ${outputName} converter is free to use and does not require an account or software installation.`,
+          text: `是的。${tool.inputFormat} 转 ${outputName} 转换工具可以免费使用，无需创建账户或安装软件。`,
         },
       },
 
       {
         "@type": "Question",
-        name: "Are my images uploaded to a server?",
+        name: "图片会上传到服务器吗？",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. Images are processed directly in the browser on the user's device and do not need to be uploaded to a server.",
+          text: "不会。图片会直接在您的浏览器中处理，原始图片无需上传到服务器。",
         },
       },
 
       {
         "@type": "Question",
-        name: "What is the maximum image size?",
+        name: "最大图片尺寸是多少？",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Images up to 50MB are supported, with a maximum dimension of 10,000 by 10,000 pixels and a maximum total pixel count of 50 million.",
+          text: "支持最大 50MB 的图片。图片最大尺寸为 10,000 × 10,000 像素，总像素数限制为 5,000 万像素。",
         },
       },
 
       {
         "@type": "Question",
-        name: "Can I use this converter on a phone?",
+        name: "可以在手机上使用吗？",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. The converter works in modern desktop and mobile browsers.",
+          text: "可以。该工具支持最新的桌面和移动浏览器，无需安装应用或其他软件。",
         },
       },
     ],
@@ -234,11 +234,11 @@ export default async function ToolSlugPage({
 
       <ToolPage
         slug={tool.slug}
-        title={`${toolTitle} Converter`}
+        title={toolTitle}
         description={toolDescription}
         inputFormat={tool.inputFormat}
         outputFormat={tool.outputFormat}
-        locale="en"
+        locale="zh"
       />
     </>
   );

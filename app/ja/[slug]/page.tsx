@@ -43,7 +43,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = getTranslations("en");
+  const t = getTranslations("ja");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -62,29 +62,28 @@ export async function generateMetadata({
     outputName
   );
 
-  const title =
-    `${toolTitle} Converter - Free Online Image Converter`;
-
-  const url = `${BASE_URL}/${tool.slug}`;
+  const url = `${BASE_URL}/ja/${tool.slug}`;
 
   return {
-    title,
+    title: `${toolTitle} - 無料オンライン画像変換`,
     description,
 
     alternates: {
       canonical: url,
       languages: {
-        en: url,
+        en: `${BASE_URL}/${tool.slug}`,
         ko: `${BASE_URL}/ko/${tool.slug}`,
-        "x-default": url,
+        ja: url,
+        "x-default": `${BASE_URL}/${tool.slug}`,
       },
     },
 
     openGraph: {
-      title,
+      title: `${toolTitle} - 無料オンライン画像変換`,
       description,
       type: "website",
       url,
+      locale: "ja_JP",
     },
 
     robots: {
@@ -94,7 +93,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ToolSlugPage({
+export default async function JapaneseToolPage({
   params,
 }: PageProps) {
   const { slug } = await params;
@@ -107,7 +106,7 @@ export default async function ToolSlugPage({
     notFound();
   }
 
-  const t = getTranslations("en");
+  const t = getTranslations("ja");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -136,7 +135,7 @@ export default async function ToolSlugPage({
     "@context": "https://schema.org",
     "@type": "WebApplication",
 
-    name: `${toolTitle} Converter`,
+    name: toolTitle,
 
     description: toolIntro,
 
@@ -146,9 +145,9 @@ export default async function ToolSlugPage({
 
     browserRequirements: "Requires JavaScript",
 
-    url: `${BASE_URL}/${tool.slug}`,
+    url: `${BASE_URL}/ja/${tool.slug}`,
 
-    inLanguage: "en",
+    inLanguage: "ja-JP",
 
     offers: {
       "@type": "Offer",
@@ -157,7 +156,7 @@ export default async function ToolSlugPage({
     },
 
     featureList: [
-      `Convert ${tool.inputFormat} to ${outputName}`,
+      `${tool.inputFormat} to ${outputName} conversion`,
       "Browser-based image conversion",
       "No server upload required",
       "Free to use",
@@ -171,46 +170,46 @@ export default async function ToolSlugPage({
     mainEntity: [
       {
         "@type": "Question",
-        name: `How do I convert ${tool.inputFormat} to ${outputName}?`,
+        name: `${tool.inputFormat}を${outputName}に変換するにはどうすればよいですか？`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Select your ${tool.inputFormat} image, convert it using the browser-based converter, and download the resulting ${outputName} image.`,
+          text: `${tool.inputFormat}画像を選択し、変換ボタンをクリックして、変換された${outputName}画像をダウンロードしてください。すべての処理はブラウザ上で直接行われます。`,
         },
       },
 
       {
         "@type": "Question",
-        name: `Is this ${tool.inputFormat} to ${outputName} converter free?`,
+        name: `${tool.inputFormat}から${outputName}への変換は無料ですか？`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes. The ${tool.inputFormat} to ${outputName} converter is free to use and does not require an account or software installation.`,
+          text: `はい。${tool.inputFormat}から${outputName}への変換ツールは無料で利用できます。アカウントの作成やソフトウェアのインストールは必要ありません。`,
         },
       },
 
       {
         "@type": "Question",
-        name: "Are my images uploaded to a server?",
+        name: "画像はサーバーにアップロードされますか？",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. Images are processed directly in the browser on the user's device and do not need to be uploaded to a server.",
+          text: "いいえ。画像はユーザーのブラウザ上で直接処理されるため、元の画像をサーバーにアップロードする必要はありません。",
         },
       },
 
       {
         "@type": "Question",
-        name: "What is the maximum image size?",
+        name: "最大画像サイズはどのくらいですか？",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Images up to 50MB are supported, with a maximum dimension of 10,000 by 10,000 pixels and a maximum total pixel count of 50 million.",
+          text: "最大50MBの画像に対応しています。画像サイズは最大10,000 × 10,000ピクセル、総ピクセル数は5,000万ピクセルまでです。",
         },
       },
 
       {
         "@type": "Question",
-        name: "Can I use this converter on a phone?",
+        name: "スマートフォンでも利用できますか？",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. The converter works in modern desktop and mobile browsers.",
+          text: "はい。最新のデスクトップおよびモバイルブラウザで利用できます。",
         },
       },
     ],
@@ -234,11 +233,11 @@ export default async function ToolSlugPage({
 
       <ToolPage
         slug={tool.slug}
-        title={`${toolTitle} Converter`}
+        title={toolTitle}
         description={toolDescription}
         inputFormat={tool.inputFormat}
         outputFormat={tool.outputFormat}
-        locale="en"
+        locale="ja"
       />
     </>
   );

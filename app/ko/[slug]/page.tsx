@@ -70,6 +70,11 @@ export async function generateMetadata({
 
     alternates: {
       canonical: url,
+      languages: {
+        en: `${BASE_URL}/${tool.slug}`,
+        ko: url,
+        "x-default": `${BASE_URL}/${tool.slug}`,
+      },
     },
 
     openGraph: {
