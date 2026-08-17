@@ -27,10 +27,14 @@ const languages = [
   {
     code: "de",
     label: "Deutsch"
+  },
+  {
+    code: "fr",
+    label: "Français"
   }
 ];
 
-const localizedLocales = ["ko", "ja", "zh", "es", "de"];
+const localizedLocales = ["ko", "ja", "zh", "es", "de", "fr"];
 
 export default function LanguageSwitcher() {
   const router = useRouter();

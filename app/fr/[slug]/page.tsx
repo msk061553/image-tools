@@ -43,7 +43,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = getTranslations("zh");
+  const t = getTranslations("fr");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -62,10 +62,10 @@ export async function generateMetadata({
     outputName
   );
 
-  const url = `${BASE_URL}/zh/${tool.slug}`;
+  const url = `${BASE_URL}/fr/${tool.slug}`;
 
   return {
-    title: `${toolTitle} - 免费在线图片转换`,
+    title: `${toolTitle} - Convertisseur d'images en ligne gratuit`,
     description,
 
     alternates: {
@@ -74,20 +74,20 @@ export async function generateMetadata({
         en: `${BASE_URL}/${tool.slug}`,
         ko: `${BASE_URL}/ko/${tool.slug}`,
         ja: `${BASE_URL}/ja/${tool.slug}`,
-        zh: url,
+        zh: `${BASE_URL}/zh/${tool.slug}`,
         es: `${BASE_URL}/es/${tool.slug}`,
         de: `${BASE_URL}/de/${tool.slug}`,
-        fr: `${BASE_URL}/fr/${tool.slug}`,
+        fr: url,
         "x-default": `${BASE_URL}/${tool.slug}`,
       },
     },
 
     openGraph: {
-      title: `${toolTitle} - 免费在线图片转换`,
+      title: `${toolTitle} - Convertisseur d'images en ligne gratuit`,
       description,
       type: "website",
       url,
-      locale: "zh_CN",
+      locale: "fr_FR",
     },
 
     robots: {
@@ -97,7 +97,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ChineseToolPage({
+export default async function FrenchToolPage({
   params,
 }: PageProps) {
   const { slug } = await params;
@@ -110,7 +110,7 @@ export default async function ChineseToolPage({
     notFound();
   }
 
-  const t = getTranslations("zh");
+  const t = getTranslations("fr");
 
   const outputName =
     tool.outputFormat === "jpeg"
@@ -149,9 +149,9 @@ export default async function ChineseToolPage({
 
     browserRequirements: "Requires JavaScript",
 
-    url: `${BASE_URL}/zh/${tool.slug}`,
+    url: `${BASE_URL}/fr/${tool.slug}`,
 
-    inLanguage: "zh-CN",
+    inLanguage: "fr-FR",
 
     offers: {
       "@type": "Offer",
@@ -174,46 +174,46 @@ export default async function ChineseToolPage({
     mainEntity: [
       {
         "@type": "Question",
-        name: `如何将 ${tool.inputFormat} 转换为 ${outputName}？`,
+        name: `Comment convertir ${tool.inputFormat} en ${outputName} ?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `选择 ${tool.inputFormat} 图片，点击转换按钮，然后下载转换后的 ${outputName} 图片。整个过程都直接在浏览器中完成。`,
+          text: `Sélectionnez votre image ${tool.inputFormat}, cliquez sur le bouton de conversion, puis téléchargez l'image ${outputName} convertie. L'ensemble du processus s'effectue directement dans votre navigateur.`,
         },
       },
 
       {
         "@type": "Question",
-        name: `${tool.inputFormat} 转 ${outputName} 是免费的吗？`,
+        name: `La conversion de ${tool.inputFormat} en ${outputName} est-elle gratuite ?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `是的。${tool.inputFormat} 转 ${outputName} 转换工具可以免费使用，无需创建账户或安装软件。`,
+          text: `Oui. Le convertisseur ${tool.inputFormat} vers ${outputName} est gratuit et ne nécessite ni compte ni installation de logiciel.`,
         },
       },
 
       {
         "@type": "Question",
-        name: "图片会上传到服务器吗？",
+        name: "Les images sont-elles envoyées sur un serveur ?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "不会。图片会直接在您的浏览器中处理，原始图片无需上传到服务器。",
+          text: "Non. Les images sont traitées directement dans votre navigateur et l'image originale n'a pas besoin d'être envoyée sur un serveur.",
         },
       },
 
       {
         "@type": "Question",
-        name: "最大图片尺寸是多少？",
+        name: "Quelle est la taille maximale d'une image ?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "支持最大 50MB 的图片。图片最大尺寸为 10,000 × 10,000 像素，总像素数限制为 5,000 万像素。",
+          text: "Les images jusqu'à 50 Mo sont prises en charge. La taille maximale est de 10 000 × 10 000 pixels et le nombre total est limité à 50 millions de pixels.",
         },
       },
 
       {
         "@type": "Question",
-        name: "可以在手机上使用吗？",
+        name: "Puis-je utiliser le convertisseur sur un téléphone ?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "可以。该工具支持最新的桌面和移动浏览器，无需安装应用或其他软件。",
+          text: "Oui. Le convertisseur fonctionne sur les navigateurs modernes pour ordinateur et mobile sans application ni logiciel supplémentaire.",
         },
       },
     ],
@@ -241,7 +241,7 @@ export default async function ChineseToolPage({
         description={toolDescription}
         inputFormat={tool.inputFormat}
         outputFormat={tool.outputFormat}
-        locale="zh"
+        locale="fr"
       />
     </>
   );

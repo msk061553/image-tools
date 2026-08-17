@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     zh: `${BASE_URL}/zh`,
     es: `${BASE_URL}/es`,
     de: `${BASE_URL}/de`,
+    fr: `${BASE_URL}/fr`,
     "x-default": BASE_URL,
   }},
   openGraph: { title: "Kostenlose Online-Bildwerkzeuge", description: "Konvertiere JPG-, PNG- und WebP-Bilder direkt in deinem Browser.", type: "website", url: `${BASE_URL}/de`, locale: "de_DE" },

@@ -1,19 +1,24 @@
 import Link from "next/link";
 import ToolCard from "@/components/ToolCard";
 import { imageTools } from "@/lib/tools/tools";
+import { getTranslations } from "@/lib/i18n";
 import type { Metadata } from "next";
+
+function replaceVariables(text: string, input: string, output: string) {
+  return text.replaceAll("{input}", input).replaceAll("{output}", output);
+}
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   "https://convertimagefreely.com";
 
 export const metadata: Metadata = {
-  title: "Free Online Image Tools",
+  title: "Outils d'image en ligne gratuits",
   description:
-    "Free online image conversion tools for JPG, PNG and WebP. Convert images directly in your browser without uploading your files.",
+    "Convertissez gratuitement des images JPG, PNG et WebP directement dans votre navigateur. Aucun envoi de fichier ni installation de logiciel.",
 
   alternates: {
-    canonical: BASE_URL,
+    canonical: `${BASE_URL}/fr`,
     languages: {
       en: BASE_URL,
       ko: `${BASE_URL}/ko`,
@@ -27,12 +32,12 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "Free Online Image Tools",
+    title: "Outils d'image en ligne gratuits",
     description:
-      "Convert JPG, PNG and WebP images directly in your browser.",
+      "Convertissez des images JPG, PNG et WebP directement dans votre navigateur.",
     type: "website",
-    url: BASE_URL,
-    locale: "en_US",
+    url: `${BASE_URL}/fr`,
+    locale: "fr_FR",
   },
 
   robots: {
@@ -41,50 +46,50 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default function FrenchHome() {
+  const t = getTranslations("fr");
+
   return (
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-blue-100 bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="mx-auto max-w-6xl px-6 py-24 text-center md:py-32">
           <div className="inline-flex items-center rounded-full border border-blue-200 bg-white/80 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm">
-            Free · Fast · Browser-based
+            {t.home.badge}
           </div>
 
           <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">
-            Simple image tools,
+            Des outils d'image simples,
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              right in your browser.
+              directement dans votre navigateur.
             </span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            Convert your images between JPG, PNG and WebP formats.
-            No uploads, no installation, and no complicated software.
+            {t.home.description}
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
-              href="/jpg-to-png"
+              href="/fr/jpg-to-png"
               className="rounded-lg bg-blue-600 px-7 py-3 font-medium text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md"
             >
-              Start Converting
+              {t.home.startConverting}
             </Link>
 
             <a
               href="#tools"
               className="rounded-lg border border-blue-200 bg-white px-7 py-3 font-medium text-gray-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50"
             >
-              View All Tools
+              {t.home.viewAllTools}
             </a>
           </div>
 
-          {/* Trust points */}
           <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-gray-500">
-            <span>✓ No account required</span>
-            <span>✓ No server upload</span>
-            <span>✓ Free to use</span>
+            <span>✓ Aucun compte requis</span>
+            <span>✓ Aucun envoi sur un serveur</span>
+            <span>✓ Gratuit</span>
           </div>
         </div>
       </section>
@@ -96,28 +101,46 @@ export default function Home() {
       >
         <div className="mb-10 text-center">
           <div className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-            Image Tools
+            {t.home.toolsTitle}
           </div>
 
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-            Convert your images easily
+            Convertissez vos images facilement
           </h2>
 
           <p className="mx-auto mt-3 max-w-2xl text-gray-500">
-            Simple and free tools for converting JPG, PNG and WebP
-            images directly in your browser.
+            {t.home.toolsDescription}
           </p>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {imageTools.map((tool) => (
-            <ToolCard
-              key={tool.slug}
-              title={tool.title}
-              description={tool.description}
-              href={`/${tool.slug}`}
-            />
-          ))}
+          {imageTools.map((tool) => {
+            const outputName =
+              tool.outputFormat === "jpeg"
+                ? "JPG"
+                : tool.outputFormat.toUpperCase();
+
+            const title = replaceVariables(
+              t.converter.toolTitle,
+              tool.inputFormat,
+              outputName
+            );
+
+            const description = replaceVariables(
+              t.converter.toolDescription,
+              tool.inputFormat,
+              outputName
+            );
+
+            return (
+              <ToolCard
+                key={tool.slug}
+                title={title}
+                description={description}
+                href={`/fr/${tool.slug}`}
+              />
+            );
+          })}
         </div>
       </section>
 
@@ -129,18 +152,15 @@ export default function Home() {
           </div>
 
           <h2 className="mt-5 text-2xl font-bold text-gray-900">
-            Your images stay on your device.
+            {t.home.privacyTitle}
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
-            ConvertImageFreely processes your files directly in your
-            browser. Your images do not need to be uploaded to a
-            server, giving you a simple and private way to convert
-            your files.
+            {t.home.privacyDescription}
           </p>
 
           <div className="mt-6 text-sm font-medium text-blue-700">
-            Private · Secure · Browser-based
+            Privé · Sécurisé · Dans le navigateur
           </div>
         </div>
       </section>
@@ -149,11 +169,11 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 py-20 md:py-24">
         <div className="mb-12 text-center">
           <div className="text-sm font-semibold uppercase tracking-wider text-purple-600">
-            Why ConvertImageFreely?
+            Les avantages de ConvertImageFreely
           </div>
 
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-            Simple tools without the hassle
+            Des outils simples, sans complications
           </h2>
         </div>
 
@@ -164,12 +184,11 @@ export default function Home() {
             </div>
 
             <h3 className="mt-5 text-lg font-semibold text-gray-900">
-              100% Browser-based
+              {t.home.browserBased}
             </h3>
 
             <p className="mt-2 leading-7 text-gray-600">
-              Image conversion happens directly on your device
-              using your browser.
+              {t.home.browserBasedDescription}
             </p>
           </div>
 
@@ -179,12 +198,11 @@ export default function Home() {
             </div>
 
             <h3 className="mt-5 text-lg font-semibold text-gray-900">
-              Free to use
+              {t.home.freeToUse}
             </h3>
 
             <p className="mt-2 leading-7 text-gray-600">
-              Convert your images without creating an account
-              or installing additional software.
+              {t.home.freeToUseDescription}
             </p>
           </div>
 
@@ -194,12 +212,11 @@ export default function Home() {
             </div>
 
             <h3 className="mt-5 text-lg font-semibold text-gray-900">
-              Private processing
+              {t.home.fastProcessing}
             </h3>
 
             <p className="mt-2 leading-7 text-gray-600">
-              Your files are processed locally, so there is no need
-              to upload your images to a remote server.
+              {t.home.fastProcessingDescription}
             </p>
           </div>
         </div>
@@ -209,18 +226,18 @@ export default function Home() {
       <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-20 text-center">
         <div className="relative mx-auto max-w-3xl">
           <h2 className="text-3xl font-bold text-white">
-            Start converting your images
+            {t.home.ctaTitle}
           </h2>
 
           <p className="mt-3 text-blue-100">
-            Choose a tool and convert your image for free.
+            {t.home.ctaDescription}
           </p>
 
           <Link
-            href="/jpg-to-png"
+            href="/fr/jpg-to-png"
             className="mt-8 inline-block rounded-lg bg-white px-7 py-3 font-medium text-blue-700 shadow-sm transition hover:bg-blue-50 hover:shadow-md"
           >
-            Try JPG to PNG
+            {t.home.tryJpgToPng}
           </Link>
         </div>
       </section>

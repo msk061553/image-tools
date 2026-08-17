@@ -32,6 +32,7 @@ export const metadata: Metadata = {
       zh: `${BASE_URL}/zh`,
       es: `${BASE_URL}/es`,
       de: `${BASE_URL}/de`,
+      fr: `${BASE_URL}/fr`,
       "x-default": BASE_URL,
     },
   },

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const toolTitle = replaceVariables(t.converter.toolTitle, tool.inputFormat, outputName);
   const description = replaceVariables(t.converter.toolIntro, tool.inputFormat, outputName); const url = `${BASE_URL}/de/${tool.slug}`;
   return { title: `${toolTitle} - Kostenloser Online-Bildkonverter`, description,
-    alternates: { canonical: url, languages: { en:`${BASE_URL}/${tool.slug}`, ko:`${BASE_URL}/ko/${tool.slug}`, ja:`${BASE_URL}/ja/${tool.slug}`, zh:`${BASE_URL}/zh/${tool.slug}`, es:`${BASE_URL}/es/${tool.slug}`, de:url, "x-default":`${BASE_URL}/${tool.slug}` } },
+    alternates: { canonical: url, languages: { en:`${BASE_URL}/${tool.slug}`, ko:`${BASE_URL}/ko/${tool.slug}`, ja:`${BASE_URL}/ja/${tool.slug}`, zh:`${BASE_URL}/zh/${tool.slug}`, es:`${BASE_URL}/es/${tool.slug}`, de:url, fr: `${BASE_URL}/fr/${tool.slug}`, "x-default":`${BASE_URL}/${tool.slug}` } },
     openGraph:{ title:`${toolTitle} - Kostenloser Online-Bildkonverter`, description, type:"website", url, locale:"de_DE" }, robots:{index:true,follow:true}
   };
 }
