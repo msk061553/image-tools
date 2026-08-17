@@ -134,15 +134,11 @@ export default function UploadBox({
         dimensions.height;
 
       if (totalPixels > MAX_IMAGE_PIXELS) {
-        setError(
-          "This image has too many pixels to process safely. Please choose a smaller image."
-        );
+        setError(t.errors.tooManyPixels);
         return;
       }
     } catch {
-      setError(
-        "Unable to read the image. Please try another file."
-      );
+      setError(t.errors.readFailed);
       return;
     }
 
