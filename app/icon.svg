@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="black"></rect>
-
-  <path d="M18 20h28v8H26v8h16v8H26v8h-8V20z" fill="white"></path>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ConvertImageFreely">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#2563EB"/>
+<stop offset="100%" stop-color="#7C3AED"/>
+</linearGradient>
+<linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#FFFFFF"/>
+<stop offset="100%" stop-color="#EDE9FE"/>
+</linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<path d="M348 151C315 122 274 108 230 108C132 108 74 177 74 256C74 335 132 404 230 404C274 404 315 390 348 361L301 314C282 329 258 337 230 337C183 337 145 305 145 256C145 207 183 175 230 175C258 175 282 183 301 198Z" fill="#fff"/>
+<path d="M190 273L225 232L248 258L271 230L313 282C317 287 313 294 306 294H194C187 294 185 279 190 273Z" fill="url(#paper)"/>
+<circle cx="279" cy="218" r="14" fill="#fff"/>
+<rect x="333" y="238" width="20" height="20" rx="5" fill="#fff"/>
+<rect x="362" y="267" width="16" height="16" rx="4" fill="#DDD6FE"/>
+<rect x="334" y="292" width="12" height="12" rx="3" fill="#fff" fill-opacity=".8"/>
 </svg>
