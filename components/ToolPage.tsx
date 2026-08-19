@@ -43,11 +43,18 @@ export default function ToolPage({
     outputName
   );
 
-  const toolWhy = replaceVariables(
-    t.converter.toolWhy,
-    inputFormat,
-    outputName
+  const currentTool = imageTools.find(
+    (tool) => tool.slug === slug
   );
+
+  const toolWhy =
+    locale === "en" && currentTool?.whyConvert
+      ? currentTool.whyConvert
+      : replaceVariables(
+          t.converter.toolWhy,
+          inputFormat,
+          outputName
+        );
 
   const relatedTools = imageTools
     .filter((tool) => tool.slug !== slug)
