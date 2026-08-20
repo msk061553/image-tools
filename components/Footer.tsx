@@ -54,6 +54,13 @@ export default function Footer() {
             >
               Contact
             </Link>
+
+            <Link
+              href="/guides"
+              className="transition hover:text-blue-600"
+            >
+              Guides
+            </Link>
           </nav>
         </div>
 

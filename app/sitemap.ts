@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { imageTools } from "@/lib/tools/tools";
+import { guides } from "@/lib/guides/guides";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -14,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+
     ...locales
       .filter((locale) => locale !== "en")
       .map((locale) => ({
@@ -30,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly" as const,
         priority: 0.8,
       },
+
       ...locales
         .filter((locale) => locale !== "en")
         .map((locale) => ({
@@ -40,5 +43,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]
   );
 
-  return [...staticPages, ...toolPages];
+  const guidePages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/guides`,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+
+    ...guides.map((guide) => ({
+      url: `${BASE_URL}/guides/${guide.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
+
+  return [
+    ...staticPages,
+    ...toolPages,
+    ...guidePages,
+  ];
 }
