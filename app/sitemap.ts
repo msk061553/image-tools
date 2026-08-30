@@ -55,6 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+
+    {
+      url: `${BASE_URL}/guides/image-format-comparison`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 
   return [

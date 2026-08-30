@@ -56,6 +56,12 @@ export default function GuidesPage() {
               description={guide.description}
             />
           ))}
+
+          <GuideCard
+            slug="image-format-comparison"
+            title="JPG vs PNG vs WebP: Real File Size & Quality Comparison"
+            description="Compare JPG, PNG, and WebP using the same test images and measured file sizes."
+          />
         </div>
       </section>
     </main>
