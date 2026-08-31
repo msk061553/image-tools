@@ -61,6 +61,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+
+    {
+      url: `${BASE_URL}/guides/image-compression-test`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 
   return [

@@ -62,6 +62,12 @@ export default function GuidesPage() {
             title="JPG vs PNG vs WebP: Real File Size & Quality Comparison"
             description="Compare JPG, PNG, and WebP using the same test images and measured file sizes."
           />
+
+          <GuideCard
+            slug="image-compression-test"
+            title="Image Compression Test: JPG vs WebP Quality and File Size"
+            description="See how JPG and WebP compression affect image file size at different quality settings."
+          />
         </div>
       </section>
     </main>
