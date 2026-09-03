@@ -24,7 +24,7 @@ export const imageTools: ImageTool[] = [
     description: "Convert PNG images to JPG format.",
     inputFormat: "PNG",
     outputFormat: "jpeg",
-     whyConvert:
+    whyConvert:
       "Converting PNG to JPG can significantly reduce file size, making images easier to share, store, and use on websites where transparency is not required.",
   },
 
@@ -55,7 +55,7 @@ export const imageTools: ImageTool[] = [
     inputFormat: "WebP",
     outputFormat: "jpeg",
     whyConvert:
-      "Converting WebP to JPG can improve compatibility with older applications, devices, and services that do not fully support the WebP format.",
+      "Converting WebP to JPG can improve compatibility with applications, devices, and services that do not fully support the WebP format.",
   },
 
   {
@@ -66,45 +66,5 @@ export const imageTools: ImageTool[] = [
     outputFormat: "png",
     whyConvert:
       "Converting WebP to PNG is useful when you need a widely supported lossless format for editing, archiving, graphics, or workflows that require PNG files.",
-  },
-
-  {
-    slug: "jpg-to-jpeg",
-    title: "JPG to JPEG",
-    description: "Convert JPG images to JPEG format.",
-    inputFormat: "JPG",
-    outputFormat: "jpeg",
-    whyConvert:
-      "JPG and JPEG use the same underlying image format, so this conversion is mainly useful when a particular application or upload service expects the .jpeg file extension.",
-  },
-
-  {
-    slug: "jpeg-to-png",
-    title: "JPEG to PNG",
-    description: "Convert JPEG images to PNG format.",
-    inputFormat: "JPG",
-    outputFormat: "png",
-    whyConvert:
-      "Converting JPEG to PNG is useful when you need a lossless format for further editing, graphics work, or workflows where preserving image data after conversion is important.",
-  },
-
-  {
-    slug: "jpeg-to-webp",
-    title: "JPEG to WebP",
-    description: "Convert JPEG images to WebP format.",
-    inputFormat: "JPG",
-    outputFormat: "webp",
-    whyConvert:
-      "Converting JPEG to WebP can help reduce file size for web delivery while retaining good visual quality, making it useful for websites and online applications.",
-  },
-
-  {
-    slug: "png-to-jpeg",
-    title: "PNG to JPEG",
-    description: "Convert PNG images to JPEG format.",
-    inputFormat: "PNG",
-    outputFormat: "jpeg",
-    whyConvert:
-      "Converting PNG to JPEG is useful when you want a smaller file size for photographs, email attachments, or websites where transparent backgrounds are not needed.",
   },
 ];
