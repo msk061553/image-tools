@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ToolCard from "@/components/ToolCard";
-import { imageTools } from "@/lib/tools/tools";
+import { imageTools, pdfTools } from "@/lib/tools/tools";
 import type { Metadata } from "next";
 
 const BASE_URL =
@@ -8,9 +8,9 @@ const BASE_URL =
   "https://convertimagefreely.com";
 
 export const metadata: Metadata = {
-  title: "Free Online Image Tools",
+  title: "Free Online Image & PDF Tools",
   description:
-    "Free online image conversion tools for JPG, PNG and WebP. Convert images directly in your browser without uploading your files.",
+    "Free online image and PDF tools. Convert JPG, PNG and WebP images, or turn PDF pages into JPG files directly in your browser.",
 
   alternates: {
     canonical: BASE_URL,
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "Free Online Image Tools",
+    title: "Free Online Image & PDF Tools",
     description:
-      "Convert JPG, PNG and WebP images directly in your browser.",
+      "Convert images and PDF pages directly in your browser without uploading your files.",
     type: "website",
     url: BASE_URL,
     locale: "en_US",
@@ -329,11 +329,11 @@ export default function Home() {
           </div>
 
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-            Popular image tools
+            Popular image & PDF tools
           </h2>
 
           <p className="mx-auto mt-3 max-w-2xl text-gray-500">
-            Quick access to our most commonly used image conversion tools.
+            Quick access to image conversion tools and PDF utilities.
           </p>
         </div>
 
@@ -345,6 +345,29 @@ export default function Home() {
               description={tool.description}
               href={`/${tool.slug}`}
             />
+          ))}
+          {pdfTools.map((tool) => (
+            <Link
+              key={tool.slug}
+              href={`/${tool.slug}`}
+              className="group relative rounded-2xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md"
+            >
+              <span className="absolute right-4 top-4 rounded-full bg-blue-600 px-2.5 py-1 text-xs font-bold text-white">
+                NEW
+              </span>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 text-sm font-bold text-red-600">
+                PDF
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-gray-900">
+                {tool.title}
+              </h3>
+              <p className="mt-2 min-h-12 text-sm leading-6 text-gray-600">
+                {tool.description}
+              </p>
+              <span className="mt-4 inline-block text-sm font-semibold text-blue-600 group-hover:text-blue-700">
+                Open tool →
+              </span>
+            </Link>
           ))}
         </div>
       </section>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { imageTools } from "@/lib/tools/tools";
+import { imageTools, pdfTools } from "@/lib/tools/tools";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const standaloneTools = [
@@ -77,6 +77,23 @@ export default function Header() {
                   ))}
                 </div>
 
+                {/* PDF Tools */}
+                <div className="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-wider text-red-500">
+                  PDF Tools
+                </div>
+
+                <div className="grid grid-cols-2 gap-1">
+                  {pdfTools.map((tool) => (
+                    <Link
+                      key={tool.slug}
+                      href={`/${tool.slug}`}
+                      className="rounded-lg px-3 py-2 text-sm text-gray-700 transition hover:bg-red-50 hover:text-red-700"
+                    >
+                      {tool.title}
+                    </Link>
+                  ))}
+                </div>
+
                 {/* Divider */}
                 <div className="my-3 border-t border-gray-100" />
 
@@ -116,6 +133,23 @@ export default function Header() {
                     key={tool.slug}
                     href={`/${tool.slug}`}
                     className="text-gray-600 transition hover:text-blue-600"
+                  >
+                    {tool.title}
+                  </Link>
+                ))}
+              </div>
+
+              {/* PDF Tools */}
+              <div className="mb-2 mt-5 text-xs font-bold uppercase tracking-wider text-red-500">
+                PDF Tools
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                {pdfTools.map((tool) => (
+                  <Link
+                    key={tool.slug}
+                    href={`/${tool.slug}`}
+                    className="text-gray-600 transition hover:text-red-600"
                   >
                     {tool.title}
                   </Link>

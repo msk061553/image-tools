@@ -68,3 +68,21 @@ export const imageTools: ImageTool[] = [
       "Converting WebP to PNG is useful when you need a widely supported lossless format for editing, archiving, graphics, or workflows that require PNG files.",
   },
 ];
+
+/**
+ * PDF utilities are kept separate from imageTools because they use
+ * different input/output formats and processing components.
+ */
+export type PdfTool = {
+  slug: string;
+  title: string;
+  description: string;
+};
+
+export const pdfTools: PdfTool[] = [
+  {
+    slug: "pdf-to-jpg",
+    title: "PDF to JPG",
+    description: "Convert each page of a PDF into a JPG image.",
+  },
+];
