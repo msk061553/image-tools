@@ -243,7 +243,6 @@ export default function PdfToJpgConverter() {
         setOutputs([...made]);
       }
       setZipBlob(await zip.generateAsync({ type: "blob" }));
-      
     } catch (e) {
       console.error(e);
       made.forEach(item => URL.revokeObjectURL(item.url));
@@ -262,6 +261,21 @@ export default function PdfToJpgConverter() {
     a.href = url; a.download = `${file.name.replace(/\.pdf$/i, "") || "converted"}-jpg.zip`;
     document.body.appendChild(a); a.click(); a.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1200);
+  }
+
+  function downloadOne(item: PageOutput) {
+    const url = URL.createObjectURL(item.blob);
+    const a = document.createElement("a");
+
+    const base = file?.name.replace(/\.pdf$/i, "") || "converted";
+    a.href = url;
+    a.download = `${base}-page-${String(item.pageNumber).padStart(2, "0")}.jpg`;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.setTimeout(() => URL.revokeObjectURL(url), 1500);
   }
 
   function reset() {
@@ -312,7 +326,13 @@ export default function PdfToJpgConverter() {
             <div className="flex h-52 items-center justify-center bg-gray-50 p-3"><img src={item.url} alt={`PDF page ${item.pageNumber} converted to JPG`} className="max-h-full max-w-full object-contain shadow-sm" /></div>
             <div className="p-3">
               <div className="flex items-center justify-between gap-2"><span className="text-sm font-medium text-gray-800">Page {item.pageNumber}</span><span className="text-xs text-gray-400">{sizeLabel(item.blob.size)}</span></div>
-              <a href={item.url} download={`${file.name.replace(/\.pdf$/i, "") || "converted"}-page-${String(item.pageNumber).padStart(2, "0")}.jpg`} className="mt-3 block rounded-lg border border-blue-200 px-3 py-2 text-center text-sm font-medium text-blue-700 transition hover:bg-blue-50">{t.download}</a>
+              <button
+                type="button"
+                onClick={() => downloadOne(item)}
+                className="mt-3 block w-full rounded-lg border border-blue-200 px-3 py-2 text-center text-sm font-medium text-blue-700 transition hover:bg-blue-50"
+              >
+                {t.download}
+              </button>
             </div>
           </div>)}
         </div>
