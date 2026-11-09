@@ -1,3 +1,4 @@
+
 import type { MetadataRoute } from "next";
 import { imageTools } from "@/lib/tools/tools";
 import { guides } from "@/lib/guides/guides";
@@ -18,11 +19,8 @@ const locales = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   /*
-   * =========================================================
    * Main / locale pages
-   * =========================================================
    */
-
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -64,14 +62,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   /*
-   * =========================================================
    * Image conversion tools
-   *
-   * These tools are generated from imageTools.
-   * Only tools currently registered in tools.ts are included.
-   * =========================================================
    */
-
   const toolPages: MetadataRoute.Sitemap =
     imageTools.flatMap((tool) => [
       {
@@ -90,16 +82,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]);
 
   /*
-   * =========================================================
-   * Standalone image tools
-   *
-   * These are English-only pages for now.
-   *
-   * Do NOT add /ko, /ja, /zh, /es, /de or /fr versions
-   * until localized pages actually exist.
-   * =========================================================
+   * Standalone image and PDF tools
+   * English-only pages for now.
    */
-
   const standaloneToolPages: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/compress-image`,
@@ -130,14 +115,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+
+    // PDF Tools
+    {
+      url: `${BASE_URL}/pdf-to-jpg`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 
   /*
-   * =========================================================
    * Guides
-   * =========================================================
    */
-
   const guidePages: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/guides`,
@@ -145,14 +134,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
-    // Existing guides from guides.ts
     ...guides.map((guide) => ({
       url: `${BASE_URL}/guides/${guide.slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
 
-    // Standalone guide pages
     {
       url: `${BASE_URL}/guides/image-format-comparison`,
       changeFrequency: "monthly",
@@ -167,11 +154,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   /*
-   * =========================================================
    * Final sitemap
-   * =========================================================
    */
-
   return [
     ...staticPages,
     ...toolPages,
